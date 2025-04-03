@@ -10,7 +10,7 @@ const social_media = [
     "not_available",
     "https://www.linkedin.com/in/yassine-bazgour-178b73305/",
     "https://www.linkedin.com/in/zahra-abouhane-27b8b218a/",
-]
+];
 
 professor.onclick = function() {
     window.open('https://www.linkedin.com/in/hajar-mousannif/', '_blank');
@@ -19,7 +19,7 @@ professor.onclick = function() {
 footer_body_info.forEach((info, index) => {
     info.onclick = function() {
         const text = this.textContent;
-        if (index == 1 || index == 2) {
+        if (index == 1 || index == 2 || index == 3) {
             window.open(text, '_blank');
             return;
         }
