@@ -1,0 +1,16 @@
+Project: GenX
+
+Title: GenX: AI-Powered Poster Generation
+
+Description:
+GenX is a deep learning project that fine-tunes a pretrained model to generate movie, series, 
+or show posters based on a given title and story description. The project leverages text-to-image 
+generation techniques to create visually compelling and thematically aligned posters that capture 
+the essence of a given narrative. By training on a dataset of existing posters labeled with their 
+corresponding titles and stories, GenX learns to understand artistic composition, typography, and 
+genre-specific aesthetics. The model will generate posters in a diverse range of styles while 
+maintaining coherence with the input text. This project can be useful for filmmakers, content 
+creators, and media platforms looking for AI-assisted poster design. The approach involves optimizing 
+a diffusion-based or transformer-based model to enhance text-to-image alignment, ensuring that the 
+generated posters effectively represent the mood, themes, and key visual elements of the given story. 
+Future extensions may include style customization and real-time poster refinement.
