@@ -37,6 +37,13 @@
     margin-bottom: 30px;
 }
 
+.header-buttons-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+}
+
 .header-analyse-button {
     width: fit-content;
     padding: 15px 30px;
@@ -54,6 +61,14 @@
 .header-analyse-button:hover {
     background-color: var(--primary-dark-hover);
     border: 2px solid var(--primary-dark-hover);
+}
+
+.git, .demo {
+    background: none;
+}
+
+.git:hover, .demo:hover {
+    background: none;
 }
 
 .header-picture-container {

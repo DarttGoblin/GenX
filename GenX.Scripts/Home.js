@@ -1,5 +1,15 @@
-const header_analyse_button = document.querySelector('.header-analyse-button');
+const submit = document.querySelector('.submit');
+const git = document.querySelector('.git');
+const demo = document.querySelector('.demo');
 
-header_analyse_button.onclick = function() {
+submit.onclick = function() {
     section[1].scrollIntoView({behavior: 'smooth'});
+}
+
+git.onclick = function() {
+    window.open('https://github.com/DarttGoblin/GenX_server', '_blank');
+}
+
+demo.onclick = function() {
+    // window.open('', '_blank');
 }
