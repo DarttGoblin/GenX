@@ -1,6 +1,3 @@
-const user_title_input = document.querySelector('.user-title-input');
-const user_story_input = document.querySelector('.user-story-input');
-
 const title_samples = [
     "The Time Traveler's Dilemma",
     "Midnight Whispers",

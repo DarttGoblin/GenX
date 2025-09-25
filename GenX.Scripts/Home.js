@@ -11,5 +11,5 @@ git.onclick = function() {
 }
 
 demo.onclick = function() {
-    // window.open('', '_blank');
+    window.open('', '_blank');
 }
