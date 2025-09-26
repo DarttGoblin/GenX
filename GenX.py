@@ -1,31 +1,38 @@
-# app.py
 from flask import Flask, request, jsonify
 from diffusers import StableDiffusionPipeline
 import torch
 from io import BytesIO
 import base64
-from waitress import serve  # Production-ready server
+import traceback
+import os
 
 app = Flask(__name__)
 
-# Global model variable
 pipe = None
+MODEL_DIR = "./models/stable-diffusion-v1-5"
 
 def load_model():
     global pipe
     if pipe is None:
         print("Loading model...")
-        pipe = StableDiffusionPipeline.from_pretrained(
-            "runwayml/stable-diffusion-v1-5",
-            torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
-            safety_checker=None
-        )
+        if os.path.exists(MODEL_DIR):
+            # Load from local path if already downloaded
+            pipe = StableDiffusionPipeline.from_pretrained(
+                MODEL_DIR,
+                torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+                safety_checker=None
+            )
+        else:
+            # First time: download from HF, then save
+            pipe = StableDiffusionPipeline.from_pretrained(
+                "runwayml/stable-diffusion-v1-5",
+                torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+                safety_checker=None
+            )
+            pipe.save_pretrained(MODEL_DIR)
+
         pipe = pipe.to("cuda" if torch.cuda.is_available() else "cpu")
         print("Model loaded!")
-
-@app.before_first_request
-def initialize():
-    load_model()
 
 @app.route('/generate', methods=['POST'])
 def generate():
@@ -38,8 +45,9 @@ def generate():
         seed = data.get('seed')
         
         generator = None
-        if seed:
-            generator = torch.Generator(device="cuda" if torch.cuda.is_available() else "cpu").manual_seed(int(seed))
+        if seed is not None:
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+            generator = torch.Generator(device=device).manual_seed(int(seed))
             
         image = pipe(
             prompt=prompt,
@@ -59,8 +67,9 @@ def generate():
         })
     
     except Exception as e:
+        traceback.print_exc()
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
 if __name__ == '__main__':
-    load_model()  # Pre-load model
-    serve(app, host="0.0.0.0", port=5000)  # Production server
+    load_model()
+    app.run(host='0.0.0.0', port=5000, debug=True)
