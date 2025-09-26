@@ -11,5 +11,6 @@ git.onclick = function() {
 }
 
 demo.onclick = function() {
-    window.open('', '_blank');
+    alert('Demo will be available very soon...');
+    // window.open('', '_blank');
 }

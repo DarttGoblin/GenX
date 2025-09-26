@@ -44,13 +44,13 @@ function SendToModel(user_input) {
 
         else {
             console.error('Error:', error);
-            alert('There was an error processing your information! Please try again.');
+            alert('There was an error processing your information! Please try again, or watch the demo instead.');
             generate_poster.textContent = 'Analyse Text';
         }
     })
     .catch(err => {
         console.error('Error:', err);
-        alert('There was an error with the server! Please try again.');
+        alert('There was an error with the server! Please try again, or watch the demo instead.');
         generate_poster.textContent = 'Analyse Text';
     });
 }
