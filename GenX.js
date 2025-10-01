@@ -18,40 +18,40 @@ generate_poster.onclick = function() {
         guidance_scale: 7.5
     };
 
-    console.log(user_type_input.value);
-    console.log(user_title_input.value);
-    console.log(user_story_input.value);
-
-    generate_poster.textContent = 'Analysing...';
+    generate_poster.textContent = 'Generating...';
+    
+    console.log(user_input.prompt);
+    console.log(user_input.negative_prompt);
+    console.log(user_input.steps);
+    console.log(user_input.guidance_scale);
+    
     
     console.log('Sending to model...');
-    SendToModel(user_input.value);
+    SendToModel(user_input);
 }
 
 function SendToModel(user_input) {
     fetch('http://localhost:5000/generate', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ user_input }),
+        body: JSON.stringify(user_input),
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            generate_poster.textContent = 'Analyse Text';
+            generate_poster.textContent = 'Generate Poster';
             console.log('success!');
-            CreateResponse(data.img);
+            CreateResponse(data.image);
         }
 
         else {
-            console.error('Error:', error);
             alert('There was an error processing your information! Please try again, or watch the demo instead.');
-            generate_poster.textContent = 'Analyse Text';
+            generate_poster.textContent = 'Generate Poster';
         }
     })
     .catch(err => {
-        console.error('Error:', err);
         alert('There was an error with the server! Please try again, or watch the demo instead.');
-        generate_poster.textContent = 'Analyse Text';
+        generate_poster.textContent = 'Generate Poster';
     });
 }
 
