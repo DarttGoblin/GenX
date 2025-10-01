@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from diffusers import StableDiffusionPipeline
 import torch
 from io import BytesIO
@@ -7,6 +8,7 @@ import traceback
 import os
 
 app = Flask(__name__)
+CORS(app)
 
 pipe = None
 MODEL_DIR = "./models/stable-diffusion-v1-5"
@@ -60,9 +62,17 @@ def generate():
         buffered = BytesIO()
         image.save(buffered, format="PNG")
         img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
+
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
+        os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+        filename = os.path.join(OUTPUT_DIR, f"generated_{torch.randint(0, int(1e9), (1,)).item()}.png")
+        image.save(filename)
+        print(f"Image saved at {filename}")
         
         return jsonify({
-            'status': 'success',
+            'success': True,
             'image': f"data:image/png;base64,{img_str}"
         })
     
