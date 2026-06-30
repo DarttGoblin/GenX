@@ -7,7 +7,7 @@ submit.onclick = function() {
 }
 
 git.onclick = function() {
-    window.open('https://github.com/DarttGoblin/GenX_server', '_blank');
+    window.open('https://github.com/DarttGoblin/GenX/tree/main/GenX.Backend', '_blank');
 }
 
 demo.onclick = function() {
